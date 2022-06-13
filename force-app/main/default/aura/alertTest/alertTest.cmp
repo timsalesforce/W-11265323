@@ -1,0 +1,58 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global">
+    <aura:attribute name="primaryQuote" type="String"></aura:attribute>
+    <aura:attribute name="spinner" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:import library="lightning:alert" property="LightningAlert"/>
+    <!--aura:handler event="aura:waiting" action="{!c.showSpinner}"/-->        <!-- event to show spinner on server call -->
+    <!--aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/--> 
+    <aura:html tag="style">
+        .slds-modal__container{
+        height : auto;
+        width: 50%;
+        max-width: 70rem;
+        }
+        .modal-body{
+        height : 250 !important;
+        max-height: 250 !important;
+        }
+        
+        .customFooter{
+        display: inline !important;
+        }
+    </aura:html> 
+    <div class="modal-header slds-docked-form-header slds-modal__header ">
+        <h4 class="title slds-text-heading--medium" >Change Currency</h4> 
+    </div>
+    
+    <div class="slds-align_absolute-center">
+        <div class="slds-grid " style="width : 50%; text-align:center">
+            <div class="slds-col"  >
+                <lightning:layout >
+                    <lightning:layoutItem size="11" >
+                        <lightning:select aura:id="currencyValue" label="Currency" name="currency" >
+                            <option value="{!null}">Please select</option>
+                                <option value="US">US</option>
+                        </lightning:select>
+                    </lightning:layoutItem>
+                </lightning:layout>
+            </div>
+        </div>
+    </div>
+    <div class="slds-m-top_medium">
+        <div class="slds-docked-form-footer slds-modal__footer customFooter" style="height:55px;">
+            <div style="float:right;">
+                <lightning:button  variant="brand"  name="change" label="Change" onclick="{! c.changeCurrencyToVal }"/>
+            </div> 
+        </div>          
+    </div>
+    
+    <aura:if isTrue="{!v.spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="status">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+</aura:component>
